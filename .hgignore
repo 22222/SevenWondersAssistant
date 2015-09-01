@@ -1,0 +1,18 @@
+syntax: glob
+
+bower_components
+node_modules
+www
+cordova/plugins
+cordova/hooks
+cordova/www
+cordova/platforms/android/build
+cordova/platforms/android/CordovaLib/build
+cordova/platforms/android/.gradle
+.git
+
+*.orig
+*~
+*.swp
+*.sublime-project
+*.sublime-workspace

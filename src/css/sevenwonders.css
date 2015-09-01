@@ -1,0 +1,226 @@
+﻿@media all and (min-width: 750px)
+{
+    div.ui-page div.ui-header
+    {
+        height: 41px;
+    }
+    div.content-primary
+    {
+        margin-left: 205px;
+    }
+    div.content-secondary
+    {
+        position: absolute;
+        top: 43px;
+        left: 0;
+        width: 200px;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        border-right: 1px solid #CCC;
+    }
+    div.content-secondary h2
+    {
+        position: absolute;
+        left: -9999px;
+    }
+    div.content-secondary div.ui-collapsible
+    {
+        margin: 0;
+        padding: 0;
+    }
+    div.content-secondary div.ui-collapsible-heading
+    {
+        display: none;
+    }
+    div.content-secondary div.ui-collapsible-content
+    {
+        border: none;
+        display: block;
+        margin: 0;
+        padding: 0;
+    }
+    div.content-secondary div.ui-collapsible-content ul,
+    div.content-secondary div.ui-collapsible-contain
+    {
+        margin: 0;
+        padding: 0;
+    }
+}
+
+div#category-military > div.header
+{
+    background: #c1272d;
+    color: #ffffff;
+    background-image: -webkit-gradient(linear, left top, left bottom, from( #D42A31 /*{d-bar-background-start}*/), to( #AD2328 /*{d-bar-background-end}*/)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient( #D42A31 /*{d-bar-background-start}*/, #AD2328 /*{d-bar-background-end}*/); /* Chrome 10+, Saf5.1+ */
+    background-image: -moz-linear-gradient( #D42A31 /*{d-bar-background-start}*/, #AD2328 /*{d-bar-background-end}*/); /* FF3.6 */
+    background-image: -ms-linear-gradient( #D42A31 /*{d-bar-background-start}*/, #AD2328 /*{d-bar-background-end}*/); /* IE10 */
+    background-image: -o-linear-gradient( #D42A31 /*{d-bar-background-start}*/, #AD2328 /*{d-bar-background-end}*/); /* Opera 11.10+ */
+    background-image: linear-gradient( #D42A31 /*{d-bar-background-start}*/, #AD2328 /*{d-bar-background-end}*/);
+}
+
+div#category-treasury > div.header
+{
+}
+
+div#category-wonder > div.header
+{
+}
+
+div#category-civilian > div.header
+{
+    background: #0071bc /*{g-bar-background-color}*/;
+    color: #ffffff /*{g-bar-color}*/;
+    background-image: -webkit-gradient(linear, left top, left bottom, from( #007CCE /*{g-bar-background-start}*/), to( #0065A9 /*{g-bar-background-end}*/)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient( #007CCE /*{g-bar-background-start}*/, #0065A9 /*{g-bar-background-end}*/); /* Chrome 10+, Saf5.1+ */
+    background-image: -moz-linear-gradient( #007CCE /*{g-bar-background-start}*/, #0065A9 /*{g-bar-background-end}*/); /* FF3.6 */
+    background-image: -ms-linear-gradient( #007CCE /*{g-bar-background-start}*/, #0065A9 /*{g-bar-background-end}*/); /* IE10 */
+    background-image: -o-linear-gradient( #007CCE /*{g-bar-background-start}*/, #0065A9 /*{g-bar-background-end}*/); /* Opera 11.10+ */
+    background-image: linear-gradient( #007CCE /*{g-bar-background-start}*/, #0065A9 /*{g-bar-background-end}*/);
+}
+
+div#category-commercial > div.header
+{
+    background: #ffcc33 /*{h-bar-background-color}*/;
+    color: #000000 /*{h-bar-color}*/;
+    background-image: -webkit-gradient(linear, left top, left bottom, from( #FFE038 /*{h-bar-background-start}*/), to( #E5B72D /*{h-bar-background-end}*/)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient( #FFE038 /*{h-bar-background-start}*/, #E5B72D /*{h-bar-background-end}*/); /* Chrome 10+, Saf5.1+ */
+    background-image: -moz-linear-gradient( #FFE038 /*{h-bar-background-start}*/, #E5B72D /*{h-bar-background-end}*/); /* FF3.6 */
+    background-image: -ms-linear-gradient( #FFE038 /*{h-bar-background-start}*/, #E5B72D /*{h-bar-background-end}*/); /* IE10 */
+    background-image: -o-linear-gradient( #FFE038 /*{h-bar-background-start}*/, #E5B72D /*{h-bar-background-end}*/); /* Opera 11.10+ */
+    background-image: linear-gradient( #FFE038 /*{h-bar-background-start}*/, #E5B72D /*{h-bar-background-end}*/);
+    text-shadow: 0 /*{h-bar-shadow-x}*/ 1px /*{h-bar-shadow-y}*/ 1px /*{h-bar-shadow-radius}*/ #EEE /*{h-bar-shadow-color}*/;
+}
+
+div#category-guilds > div.header
+{
+    background: #662d91 /*{i-bar-background-color}*/;
+    color: #ffffff /*{i-bar-color}*/;
+    background-image: -webkit-gradient(linear, left top, left bottom, from( #70319F /*{i-bar-background-start}*/), to( #5B2882 /*{i-bar-background-end}*/)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient( #70319F /*{i-bar-background-start}*/, #5B2882 /*{i-bar-background-end}*/); /* Chrome 10+, Saf5.1+ */
+    background-image: -moz-linear-gradient( #70319F /*{i-bar-background-start}*/, #5B2882 /*{i-bar-background-end}*/); /* FF3.6 */
+    background-image: -ms-linear-gradient( #70319F /*{i-bar-background-start}*/, #5B2882 /*{i-bar-background-end}*/); /* IE10 */
+    background-image: -o-linear-gradient( #70319F /*{i-bar-background-start}*/, #5B2882 /*{i-bar-background-end}*/); /* Opera 11.10+ */
+    background-image: linear-gradient( #70319F /*{i-bar-background-start}*/, #5B2882 /*{i-bar-background-end}*/);
+}
+
+div#category-science > div.header
+{
+    background: #006837 /*{j-bar-background-color}*/;
+    color: #ffffff /*{j-bar-color}*/;
+    background-image: -webkit-gradient(linear, left top, left bottom, from( #00723C /*{j-bar-background-start}*/), to( #005D31 /*{j-bar-background-end}*/)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient( #00723C /*{j-bar-background-start}*/, #005D31 /*{j-bar-background-end}*/); /* Chrome 10+, Saf5.1+ */
+    background-image: -moz-linear-gradient( #00723C /*{j-bar-background-start}*/, #005D31 /*{j-bar-background-end}*/); /* FF3.6 */
+    background-image: -ms-linear-gradient( #00723C /*{j-bar-background-start}*/, #005D31 /*{j-bar-background-end}*/); /* IE10 */
+    background-image: -o-linear-gradient( #00723C /*{j-bar-background-start}*/, #005D31 /*{j-bar-background-end}*/); /* Opera 11.10+ */
+    background-image: linear-gradient( #00723C /*{j-bar-background-start}*/, #005D31 /*{j-bar-background-end}*/);
+}
+
+div#category-leaders > div.header
+{
+    background: #f9f9f9 /*{k-body-background-color}*/;
+    color: #333333 /*{k-body-color}*/;
+	background-image: -webkit-gradient(linear, left top, left bottom, from( #f9f9f9 /*{c-body-background-start}*/), to( #eeeeee /*{c-body-background-end}*/)); /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient( #f9f9f9 /*{c-body-background-start}*/, #eeeeee /*{c-body-background-end}*/); /* Chrome 10+, Saf5.1+ */
+	background-image: -moz-linear-gradient( #f9f9f9 /*{c-body-background-start}*/, #eeeeee /*{c-body-background-end}*/); /* FF3.6 */
+	background-image: -ms-linear-gradient( #f9f9f9 /*{c-body-background-start}*/, #eeeeee /*{c-body-background-end}*/); /* IE10 */
+	background-image: -o-linear-gradient( #f9f9f9 /*{c-body-background-start}*/, #eeeeee /*{c-body-background-end}*/); /* Opera 11.10+ */
+	background-image: linear-gradient( #f9f9f9 /*{c-body-background-start}*/, #eeeeee /*{c-body-background-end}*/);
+	text-shadow: 0 /*{k-bar-shadow-x}*/ 1px /*{k-bar-shadow-y}*/ 1px /*{k-bar-shadow-radius}*/ #EEE /*{k-bar-shadow-color}*/;
+}
+
+
+ul.playersetup-wrapper div.removePlayer
+{
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -20px;
+}
+
+ul.playersetup-wrapper .ui-li-has-count .ui-li-count.playerscore
+{
+    right: 55px;
+    opacity: .3;
+	filter: Alpha(Opacity=30);
+}
+
+table.science
+{
+    width: 100%;
+    border-spacing: 0;
+}
+
+table.science > thead > tr > th > label
+{
+    overflow: hidden;
+}
+
+table.science > thead > tr > th, 
+table.science > tbody > tr > td
+{
+    text-align: center;
+}
+
+table.science > thead > tr > th > label,
+table.science > tbody > tr > td > input
+{
+    width: 55px;
+}
+
+@media all and (max-width: 350px)
+{
+    table.science > thead > tr > th.compass > label
+    {
+        position: relative;
+        overflow: visible;
+        left: -8px;
+    }
+}
+
+@media all and (min-width: 350px)
+{
+    table.science > thead > tr > th > label,
+    table.science > tbody > tr > td > input
+    {
+        min-width: 70px;
+        width: 100%;
+    }
+}
+
+.sciencescore-wrapper,
+.playerscore-wrapper
+{
+    position: relative;
+    font-weight: normal;
+    line-height: 1.4;
+    font-size: 16px;
+}
+
+.sciencescore-wrapper .explain
+{
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-width: 0;
+    border-left-width: 1px;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    z-index: 2;
+}
+
+div.scienceExplanation-wrapper 
+{
+    padding: 15px 5px;
+}
+div.scienceExplanation-wrapper > div.ui-content 
+{
+    padding: 0;
+}
+div.scienceExplanation-wrapper .ui-li-desc 
+{
+    white-space: normal;
+}

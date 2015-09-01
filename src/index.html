@@ -1,0 +1,340 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Seven Wonders Assistant</title>    
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link href="css/site.min.css" rel="stylesheet"/>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/knockout.js"></script>
+    <script src="js/sciencesolver.min.js"></script>
+    <script src="js/sevenwonders.min.js"></script>
+    <script src="js/knockout.jqm.min.js"></script>
+    <script src="js/jqm.init.min.js"></script>
+    <script src="js/jquery.mobile-1.2.0.min.js"></script>
+</head>
+<body>
+    <div data-role="page" id="gamesetup">
+        <div data-role="header">
+            <h1>Game Setup</h1>
+        </div>
+        <div data-role="content">
+            <ul class="playersetup-wrapper" data-role="listview" data-inset="true">
+                <li data-role="list-divider" data-bind="visible: !isTeams()">Players</li>
+                <!-- ko foreach: players -->
+                <li data-role="list-divider" data-bind="visible: isEditable() && isTeamStart()">
+                    <span data-bind="text: team().name"></span>
+                    <span class="ui-li-count teamscore" data-bind="text: team().totalScore"></span>
+                </li>
+
+                <li data-bind="visible: isEditable" class="player">
+                    <label for="id" data-bind="text: label" style="display: none;"></label>
+                    <input id="id" type="text" data-bind="value: nameEditable, valueUpdate: 'afterkeydown'" />
+                    <span class="ui-li-count playerscore" data-bind="text: score.total"></span>
+                    <div class="removePlayer">
+                        <button data-icon="delete" data-iconpos="notext" data-bind="click: $parent.removePlayer" tabIndex="-1">Delete</button>
+                    </div>
+                </li>
+                <!-- /ko -->
+                <li data-role="list-divider" data-bind="visible: isTeams">Actions</li>
+                <li data-bind="visible: isAddPlayerActionAvailable"><button data-bind="click: addPlayer">Add Player</button></li>
+            </ul>
+
+            <div data-role="controlgroup" data-type="horizontal" >
+                <button data-bind="click: clear">Clear</button>
+                <button data-bind="click: clearScores">Clear Scores</button>
+            </div>
+
+            <ul id="expansionlist" data-role="listview" data-inset="true">
+                <li data-role="list-divider">Expansions</li>
+                <!-- ko foreach: { data: expansions } -->
+                <li>
+                        <input type="checkbox" data-bind="{ jqmChecked: active, attr: { id: id }}" />
+                        <label data-bind="{text: name, attr: { 'for': id }}"></label>
+                </li>
+                <!-- /ko -->
+            </ul>
+
+            <ul id="optionlist" data-role="listview" data-inset="true" data-bind="visible: isAvailableOption">
+                <li data-role="list-divider">Options</li>
+                <!-- ko foreach: options -->
+                <li data-bind="visible:available">
+                        <input type="checkbox" data-bind="{ jqmChecked: active, attr: { id: id }}" />
+                        <label data-bind="{text: name, attr: { 'for': id }}"></label>
+                </li>
+                <!-- /ko -->
+            </ul>
+
+            <div data-role="controlgroup">
+                <a data-role="button" data-icon="arrow-r" data-bind="attr: { href: '#category-' + firstActiveCategory().id}">Score By Category</a>
+                <a data-role="button" data-icon="arrow-r" data-bind="attr: { href: '#' + firstActivePlayer().id + '-score' }">Score By Player</a>
+                <a data-role="button" data-icon="star" href="#results">Results</a>
+            </div>
+        </div>
+        <div data-role="footer">
+        </div>
+    </div>
+
+    <!-- ko foreach: { data: categories } -->
+        <div data-role="page" data-bind="attr: { id: 'category-' + id}">
+            <div data-role="header" class="header">
+                <h1 data-bind="text: name"></h1>
+                <a href="#gamesetup" data-icon="gear" data-iconpos="notext" class="ui-btn-right">Game Setup</a>
+            </div>
+            <div data-role="content">
+                <div class="content-primary">
+                    <ul class="categoryplayers" data-role="listview" data-inset="true" data-bind="foreach: $parent.players">
+                        <li data-role="list-divider" data-bind="visible: active() && isTeamStart()">
+                            <span data-bind="text: team().name"></span>
+                            <span class="ui-li-count teamscore" data-bind="text: team().totalScore"></span>
+                        </li>
+
+                        <!-- ko template: $parent.categoryValueTemplate --><!-- /ko -->
+                    </ul>
+
+                    <div>
+                        <!-- ko if: hasNext() -->
+                        <a data-role="button" data-icon="arrow-r" data-bind="{jqmRefreshButton: hasNext(), attr: { href: '#category-' + next().id }}">
+                            <span data-bind="text: next().name"></span>
+                        </a>
+                        <!-- /ko -->
+                        <a data-role="button" data-icon="star" href="#results">Results</a>
+                    </div>
+                </div>
+
+                <div class="content-secondary">
+                    <div data-role="collapsible" data-collapsed="true">
+                        <h2>Navigation</h2>
+                        <ul class="categories" data-role="listview" data-bind="jqmRefreshListview: $parent.activeCategories">
+                            <li data-role="list-divider">Categories</li>
+                            <!-- ko foreach: $parent.activeCategories -->
+                            <li data-bind="attr: { 'data-theme': id == $parent.id ? 'b' : undefined }">
+                                <a data-bind="attr: {href: '#category-' + id}">
+                                    <span data-bind="text: name"></span>
+                                </a>
+                            </li>
+                            <!-- /ko -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- /ko -->
+
+    <div data-role="page" id="results">
+        <div data-role="header">
+            <h1>Results</h1>
+            <a href="#gamesetup" data-icon="gear" data-iconpos="notext" class="ui-btn-right">Game Setup</a>
+        </div>
+        <div data-role="content">
+            <div class="content-primary">
+                <script type="text/html" id="playerResultTemplate">
+                    <li data-bind="visible: active">
+                        <a data-bind="attr: { href: '#' + id + '-score' }">
+                            <span data-bind="text: nameOrDefault"></span>
+                        </a>
+                        <span class="ui-li-count" data-bind="text: score.total"></span>
+                    </li>
+                </script>
+
+                <ol data-role="listview" data-inset="true" data-bind="foreach: playersByScore, jqmRefreshListview: playersByScore, visible: !isTeams()">
+                    <!-- ko template: 'playerResultTemplate' --><!-- /ko -->
+                </ol>
+
+                <ul data-role="listview" data-inset="true" data-bind="foreach: teamsByScore, jqmRefreshListview: playersByScore, visible: isTeams">
+                    <li data-role="list-divider" data-bind="visible: active">
+                        <span data-bind="text: name"></span>
+                        <span class="ui-li-count teamscore" data-bind="text: totalScore"></span>
+                    </li>
+                    <!-- ko foreach: players -->
+                    <!-- ko template: 'playerResultTemplate' --><!-- /ko -->
+                    <!-- /ko -->
+                </ul>
+
+                <div>
+                    <a href="#gamesetup" data-role="button" data-icon="gear">Game Setup</a>
+                </div>
+            </div>
+            <div class="content-secondary">
+                <div data-role="collapsible" data-collapsed="true">
+                    <h2>Navigation</h2>
+                    <ul class="categories" data-role="listview" data-bind="jqmRefreshListview: activeCategories">
+                        <li data-role="list-divider">Categories</li>
+                        <!-- ko foreach: activeCategories -->
+                        <li>
+                            <a data-bind="attr: {href: '#category-' + id}">
+                                <span data-bind="text: name"></span>
+                            </a>
+                        </li>
+                        <!-- /ko -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ko foreach: { data: players } -->
+    <div data-role="page" data-bind="attr: { id: id + '-score'}">
+        <div data-role="header">
+            <h1 data-bind="text: nameOrDefault"></h1>
+            <a href="#gamesetup" data-icon="gear" data-iconpos="notext" class="ui-btn-right">Game Setup</a>
+        </div>
+        <div class="content-primary">
+            <ul data-role="listview" data-bind="jqmRefreshListview: $parent.categories">
+                <li data-role="list-divider">Scores</li>
+                <!-- ko foreach: { data: $parent.categories } -->
+                <!-- ko template: playerValueTemplate --><!-- /ko -->
+                <!-- /ko -->
+
+                <li data-role="list-divider">Results</li>
+                <li data-role="fieldcontain" class="playerscore-wrapper">
+                    <span>Total: </span>
+                    <span class="playerscore" data-bind="{text: score.total}"></span>
+                </li>
+            </ul>
+
+            <div>
+                <!-- ko if: hasNext() -->
+                <a data-role="button" data-icon="arrow-r" data-bind="{jqmRefreshButton: hasNext(), attr: { href: '#' + next().id + '-score' }}">
+                    <span data-bind="text: next().nameOrDefault"></span>
+                </a>
+                <!-- /ko -->
+                <a data-role="button" data-icon="star" href="#results">Results</a>
+            </div>
+        </div>
+        <div class="content-secondary">
+            <div data-role="collapsible" data-collapsed="true">
+                <h2>Navigation</h2>
+                <ul data-role="listview" data-bind="jqmRefreshListview: $parent.activePlayers">
+                    <li data-role="list-divider">Players</li>
+                    <!-- ko foreach: { data: $parent.activePlayers } -->
+                    <li data-bind="attr: { 'data-theme': id == $parent.id ? 'b' : undefined }">
+                        <a data-bind="attr: {href: '#' + id + '-score'}">
+                            <span data-bind="text: nameOrDefault"></span>
+                        </a>
+                    </li>
+                    <!-- /ko -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- /ko -->
+
+    <script type="text/html" id="categoryDefaultTemplate">
+        <li data-role="fieldcontain" data-bind="visible: active">
+            <label data-bind="{ text: nameOrDefault, attr: { 'for': $parent.id + '-' + id }}"></label>
+            <input data-bind="{value: score[$parent.id].scoreEditable, valueUpdate: 'afterkeydown', attr: { id: $parent.id + '-' + id, type: $parent.inputType, min: $parent.min, max: $parent.max}}" />
+            <span class="ui-li-count" data-bind="text: score.total"></span>
+        </li>
+    </script>
+    <script type="text/html" id="categoryScienceTemplate">
+        <li data-role="list-divider" data-bind="visible: active">
+            <span data-bind="text: nameOrDefault"></span>
+            <span class="ui-li-count" data-bind="text: score.total"></span>
+        </li>
+
+        <li data-bind="visible: active">
+            <table class="science">
+                <thead>
+                    <tr>
+                        <th><label data-bind="attr: { 'for': $parent.id + '-tablet-' + id }">Tablet</label></th>
+                        <th><label data-bind="attr: { 'for': $parent.id + '-gear-' + id }">Gear</label></th>
+                        <th class="compass"><label data-bind="attr: { 'for': $parent.id + '-compass-' + id }">Compass</label></th>
+                        <th><label data-bind="attr: { 'for': $parent.id + '-wild-' + id }">Wild</label></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input data-bind="{value: score[$parent.id].tabletEditable, valueUpdate: 'afterkeydown', attr: { id: $parent.id + '-tablet-' + id, type: $parent.inputType, min: $parent.min, max: $parent.max}}" /></td>
+                        <td><input data-bind="{value: score[$parent.id].gearEditable, valueUpdate: 'afterkeydown', attr: { id: $parent.id + '-gear-' + id, type: $parent.inputType, min: $parent.min, max: $parent.max}}" /></td>
+                        <td><input data-bind="{value: score[$parent.id].compassEditable, valueUpdate: 'afterkeydown', attr: { id: $parent.id + '-compass-' + id, type: $parent.inputType, min: $parent.min, max: $parent.max}}" /></td>
+                        <td><input data-bind="{value: score[$parent.id].wildEditable, valueUpdate: 'afterkeydown', attr: { id: $parent.id + '-wild-' + id, type: $parent.inputType, min: $parent.min, max: $parent.max}}" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        </li>
+
+        <li data-role="fieldcontain" data-bind="visible: active() && score[$parent.id].isAristotleActive()">
+            <label data-bind="attr: { 'for': $parent.id + '-aristotle-' + id }">Aristotle Leader</label>
+            <input type="checkbox" data-bind="{jqmChecked: score[$parent.id].hasAristotle, attr: { id: $parent.id + '-aristotle-' + id}}" />
+        </li>
+
+        <li class="sciencescore-wrapper" data-role="fieldcontain" data-bind="visible: active">
+            <span>Science Score: </span>
+            <span class="sciencescore" data-bind="{text: score[$parent.id].score, attr: { id: $parent.id + '-score-' + id}}"></span>
+            <span class="explain" data-bind="visible: hasScienceScoreExplanation">
+                <a data-role="button" data-rel="popup" data-icon="info" data-iconpos="notext" data-bind="attr: { href: '#scienceCategory-' + id + '-scienceExplanation'}" tabIndex="-1">Explain</a>
+            </span>
+            <div data-role="popup" data-bind="attr: { id: 'scienceCategory-' + id + '-scienceExplanation'}" class="scienceExplanation-wrapper ui-content">
+                <div data-role="content">
+                    <p data-bind="html: scienceScoreExplanation"></p>
+                </div>
+            </div>
+        </li>
+    </script>
+    <script type="text/html" id="categoryTowerOfBabelTemplate">
+        <li data-role="fieldcontain" data-bind="visible: active">
+            <label data-bind="{ text: nameOrDefault() + ' (Tiles Built)', attr: { 'for': $parent.id + '-' + id }}"></label>
+            <input type="number" data-bind="{value: score[$parent.id].babelTileCountEditable, valueUpdate: 'afterkeydown', attr: { id: $parent.id + '-' + id, min: $parent.min, max: $parent.max}}" />
+            <span class="ui-li-count" data-bind="text: score.total"></span>
+        </li>
+    </script>
+
+    <script type="text/html" id="playerDefaultTemplate">
+        <li data-role="fieldcontain" data-bind="visible: active">
+            <label data-bind="{text: name, attr: { 'for': $parent.id + '-' + id }}"></label>
+            <input data-bind="{value: $parent.score[id].scoreEditable, valueUpdate: 'afterkeydown', attr: { id: $parent.id + '-' + id, type: inputType, min: min, max: max}}" />
+        </li>
+    </script>
+    <script type="text/html" id="playerScienceTemplate">
+        <li data-role="list-divider">Science</li>
+        <li data-role="fieldcontain">
+            <table class="science">
+                <thead>
+                    <tr>
+                        <th><label data-bind="attr: { 'for': $parent.id + '-' + id + '-tablet' }">Tablet</label></th>
+                        <th><label data-bind="attr: { 'for': $parent.id + '-' + id + '-gear' }">Gear</label></th>
+                        <th class="compass"><label data-bind="attr: { 'for': $parent.id + '-' + id + '-compass' }">Compass</label></th>
+                        <th><label data-bind="attr: { 'for': $parent.id + '-' + id + '-wild' }">Wild</label></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input data-bind="{value: $parent.score[id].tabletEditable, valueUpdate: 'afterkeydown', attr: { id: $parent.id + '-' + id + '-tablet', type: inputType, min: min, max: max}}" /></td>
+                        <td><input data-bind="{value: $parent.score[id].gearEditable, valueUpdate: 'afterkeydown', attr: { id: $parent.id + '-' + id + '-gear', type: inputType, min: min, max: max}}" /></td>
+                        <td><input data-bind="{value: $parent.score[id].compassEditable, valueUpdate: 'afterkeydown', attr: { id: $parent.id + '-' + id + '-compass', type: inputType, min: min, max: max}}" /></td>
+                        <td><input data-bind="{value: $parent.score[id].wildEditable, valueUpdate: 'afterkeydown', attr: { id: $parent.id + '-' + id + '-wild', type: inputType, min: min, max: max}}" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        </li>
+        <li data-role="fieldcontain" data-bind="visible: $parent.score[id].isAristotleActive">
+            <label data-bind="attr: { 'for': $parent.id + '-' + id + '-aristotle' }">Aristotle Leader</label>
+            <input type="checkbox" data-bind="{jqmChecked: $parent.score[id].hasAristotle, attr: { id: $parent.id + '-' + id + '-aristotle'}}" />
+        </li>
+        <li class="sciencescore-wrapper">
+            <span>Science Score: </span>
+            <span class="sciencescore" data-bind="{text: $parent.score[id].score, attr: { id: $parent.id + '-' + id + '-score'}}"></span>
+            <span class="explain" data-bind="visible: $parent.hasScienceScoreExplanation">
+                <a data-role="button" data-rel="popup" data-icon="info" data-iconpos="notext" data-bind="attr: { href: '#' + $parent.id + '-scienceExplanation'}" tabIndex="-1">Explain</a>
+            </span>
+            <div data-role="popup" data-bind="attr: { id: $parent.id + '-scienceExplanation'}" class="scienceExplanation-wrapper ui-content">
+                <div data-role="content">
+                    <p data-bind="html: $parent.scienceScoreExplanation"></p>
+                </div>
+            </div>
+        </li>
+        <li data-role="list-divider" data-bind="visible: hasNext">Scores</li>
+    </script>
+    <script type="text/html" id="playerTowerOfBabelTemplate">
+        <li data-role="fieldcontain" data-bind="visible: active">
+            <label data-bind="{ attr: { 'for': $parent.id + '-' + id }}">Tower of Babel Tiles Built</label>
+            <input type="number" data-bind="{value: $parent.score[id].babelTileCountEditable, valueUpdate: 'afterkeydown', attr: { id: $parent.id + '-' + id, min: min, max: max}}" />
+            <span class="ui-li-count" data-bind="text: $parent.score[id].score()"></span>
+        </li>
+    </script>
+</body>
+</html>

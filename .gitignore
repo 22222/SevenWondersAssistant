@@ -1,0 +1,17 @@
+bower_components
+node_modules
+publish
+cordova/platforms
+cordova/plugins
+cordova/hooks
+cordova/www
+.hg
+
+*.apk
+*.keystore
+
+*.orig
+*~
+*.swp
+*.sublime-project
+*.sublime-workspace
