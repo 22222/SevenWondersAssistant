@@ -11,9 +11,9 @@ Source Overview
 ---------------
 There are three main directories in this project:
 
-* src: all of the actual source code that is unique to this app
-* cordova: the config file and resources for the Cordova build
-* www: the output of the build process, to be used directly as a web page or as resources in the Cordova build
+* `src`: all of the actual source code that is unique to this app
+* `cordova`: the config file and resources for the Cordova build
+* `www`: the output of the build process, to be used directly as a web page or as resources in the Cordova build
 
 This project uses several other open source libraries, including:
 * [jQuery Mobile](https://jquerymobile.com/)
